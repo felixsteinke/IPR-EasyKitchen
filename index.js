@@ -21,6 +21,15 @@ app.get('/api/bestand', async (req, res) => {
 app.get('/', (req, res) => {
   res.render('pages/index', { success: true });
 });
+app.get('/stock', (req, res) => {
+  res.render('pages/bestand', { success: true });
+});
+app.get('/list', (req, res) => {
+  res.render('pages/einkaufsliste', { success: true });
+});
+app.get('/recipe', (req, res) => {
+  res.render('pages/rezepte', { success: true });
+});
 
 app.post('/api/shouts', (req, res) => {
   if (req.body.username && req.body.message) {

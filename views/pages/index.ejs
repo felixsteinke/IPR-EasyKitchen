@@ -4,38 +4,19 @@
     <% include ../partials/header %>
 </head>
 <body>
-    <%- include ../partials/nav %>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="./index.html">EasyKitchen</a>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="./bestand/bestand.html">Bestand</a>
-                </li>
-
-                <li class="nav-item active">
-                    <a class="nav-link" href="./rezepte/rezepte.html">Rezepte</a>
-                </li>
-
-                <li class="nav-item active">
-                    <a class="nav-link" href="./einkaufsliste/einkaufsliste.html">Einkaufsliste</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <%- include ../partials/navbar %>
 
     <div class="container btnGroup">
         <div>
-            <a class="btn btn-index btn-outline-secondary btn-block" href="./bestand/bestand.html"
+            <a class="btn btn-index btn-outline-secondary btn-block" href="/stock"
                 role="button">Bestand</a>
         </div>
         <div>
-            <a class="btn btn-index btn-outline-secondary btn-block" href="./rezepte/rezepte.html"
+            <a class="btn btn-index btn-outline-secondary btn-block" href="/recipe"
                 role="button">Rezepte</a>
         </div>
         <div>
-            <a class="btn btn-index btn-outline-secondary btn-block" href="./einkaufsliste/einkaufsliste.html"
+            <a class="btn btn-index btn-outline-secondary btn-block" href="/list"
                 role="button">Einkaufsliste</a>
         </div>
     </div>

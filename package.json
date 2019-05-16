@@ -1,7 +1,7 @@
 {
   "name": "ipr-easykitchen",
   "version": "1.0.0",
-  "description": "",
+  "description": "IPR-Project",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/felixsteinke/IPR-EasyKitchen"
+    "url": "git+https://github.com/felixsteinke/IPR-EasyKitchen.git"
   },
   "author": "felix, johnny",
   "license": "ISC",
@@ -20,8 +20,8 @@
   "homepage": "https://github.com/felixsteinke/IPR-EasyKitchen#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
     "sqlite3": "^4.0.8"
   },
   "devDependencies": {

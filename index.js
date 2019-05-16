@@ -12,21 +12,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/public', express.static(process.cwd() + '/public'));
 
-app.get('/', async (req, res) => {
-  db.all('SELECT * FROM shouts', (err, shouts) => {
-    res.render('pages/index', { shouts })
+app.get('/api/bestand', async (req, res) => {
+  db.all('SELECT * FROM stock', (err, stock) => {
+    res.json(stock).end()
   });
 });
 
-app.get('/api/shouts', async (req, res) => {
-  db.all('SELECT * FROM shouts', (err, shouts) => {
-    res.json(shouts).end()
-  });
-});
-
-
-app.get('/add-entry', (req, res) => {
-  res.render('pages/add-entry', { success: true });
+app.get('/', (req, res) => {
+  res.render('pages/index', { success: true });
 });
 
 app.post('/api/shouts', (req, res) => {

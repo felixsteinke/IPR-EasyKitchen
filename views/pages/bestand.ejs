@@ -6,7 +6,7 @@
 </head>
 
 <body>
-  <%- include ../partials/navbar %>
+  <% include ../partials/navbar %>
 
   <div class="table stock">
     <table class="table table-stock">
@@ -19,12 +19,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>Name</th>
-          <td>stückzahl</td>
-          <td>button plus</td>
-          <td>button minus</td>
-        </tr>
+
+        <% stockElements.forEach(s => { %>
+          <tr>
+            <th scope="row"><%= s.name %></th>
+            <th scope="row"><%= s.count %></th>
+            <td><% include ../partials/button %></td>
+            <td><% include ../partials/button %></td>
+          </tr>
+        <% }) %>
+
       </tbody>
     </table>
   </div>

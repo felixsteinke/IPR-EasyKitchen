@@ -19,16 +19,14 @@
         </tr>
       </thead>
       <tbody>
-
         <% stockElements.forEach(s => { %>
           <tr>
             <th scope="row"><%= s.name %></th>
-            <th scope="row"><%= s.count %></th>
-            <td><% include ../partials/button %></td>
-            <td><% include ../partials/button %></td>
+            <th scope="row"><%= s.amountStock %></th>
+            <td><%- include('../partials/button', {label:"+", id: "add", name: s.name, amountStock: s.amountStock}); %></td>
+            <td><%- include('../partials/button', {label:"-", id: "remove", name: s.name, amountStock: s.amountStock}); %></td>
           </tr>
         <% }) %>
-
       </tbody>
     </table>
   </div>

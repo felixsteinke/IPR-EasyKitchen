@@ -1,1 +1,7 @@
-<button type="button" class="changeStock btn btn-outline-secondary"></button>
+<a href="/stock?special=data"
+    data-name="<%= name ? name : 'no-name' %>"
+    data-amount="<%= amountStock ? amountStock : 'no-amountStock' %>"
+    type="button"
+    class="<%= id ? id : 'no-id' %> changeStock btn btn-outline-secondary">
+    <%= label ? label : 'no label' %>
+</a>

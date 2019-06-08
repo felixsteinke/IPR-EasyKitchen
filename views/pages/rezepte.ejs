@@ -8,57 +8,26 @@
 <body>
   <%- include ../partials/navbar %>
 
-  <div class="recipes">
-    <div class="recipe">
-      <div class="recipe headline">
-        <h2>Name Rezept</h2>
-      </div>
-      <div class="recipe picture">
-        <h3>Pic</h3>
-      </div>
-      <div class="recipe table-components">
-        <table class="table recipe-components">
-          <h3>Zutaten</h3>
-          <thead>
-            <tr>
-              <th scope="col">Stück</th>
-              <th scope="col">Gramm</th>
-              <th scope="col">Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Stück</td>
-              <td>Gramm</td>
-              <td>Name</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="description">
-        <p>Beschreibung</p>
-      </div>
-      <div class="button add-to-list">
+  <div class="flex-container">
 
-      </div>
-      <div class="button cooked-delete-stock">
-
-      </div>
+    <div class="selection-items">
+      <table class="table list-recipe-selection">
+        <thead>
+          <tr>
+            <th scope="col">Auswahl</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% recipes.forEach(r => { %>
+              <tr id="<%= r.name %>" class="select-recipe">
+                <%= r.name %>
+              </tr>
+              <% }) %>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div class="recipe-selection">
-    <table class="table list-recipe-selection">
-      <thead>
-        <tr>
-          <th scope="col">Auswahl</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Rezept1</td>
-        </tr>
-      </tbody>
-    </table>
+
+    <%- include ../partials/recipe %>
   </div>
 
 </body>

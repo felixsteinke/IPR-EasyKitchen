@@ -31,10 +31,9 @@ app.get('/', (req, res) => {
 });
 
 
-// Stock Route
+// stock Route
 app.get('/stock', (req, res) => {
-  db.all('SELECT * FROM Stock', (err, stockElements) => {
-    //TODO
+  db.all('SELECT * FROM stock', (err, stockElements) => {
     if (err) {
       console.log(err)
       res.render('pages/bestand', { stockElements: [] })
@@ -44,12 +43,19 @@ app.get('/stock', (req, res) => {
 });
 
 
-// List Route
+// shoppinglist Route
 app.get('/list', (req, res) => {
   res.render('pages/einkaufsliste', { success: true });
 });
+// recipe Route
 app.get('/recipe', (req, res) => {
-  res.render('pages/rezepte', { success: true });
+  db.all('SELECT * FROM recipes', (err, recipes) => {
+    if (err) {
+      console.log(err)
+      res.render('pages/rezepte', { recipes: [] })
+    }
+    res.render('pages/rezepte', { recipes });
+  });
 });
 
 app.post('/api/stock', (req, res) => {

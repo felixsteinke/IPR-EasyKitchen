@@ -13,9 +13,12 @@
     flex-direction: row;
 }
 .selection-items {
-    width: 40%;
+    width: 30%;
     padding-right: 10%;
 }
 .shopping-list {
     width: 100%;
+}
+.recipe {
+    width: 100%
 }

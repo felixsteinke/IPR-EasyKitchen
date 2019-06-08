@@ -1,8 +1,13 @@
 $(document).ready((() => {
     console.log('DOM is ready!')
-    $('.add').on("click", (evt) => stockUpdate(evt, 1))
-    $('.remove').on("click", (evt) => stockUpdate(evt, -1))
+    $('.add').on("click", evt => stockUpdate(evt, 1))
+    $('.remove').on("click", evt => stockUpdate(evt, -1))
+    $('#select-recipe').on('click', evt => openRecipe(evt))
 }))
+
+function openRecipe(evt) {
+
+}
 
 function updateRow(data, newAmount) {
     const row = document.getElementById(data.name).childNodes

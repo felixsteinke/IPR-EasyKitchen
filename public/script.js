@@ -13,9 +13,6 @@ function updateRow(data, newAmount) {
 
 async function stockUpdate(evt, change) {
     evt.preventDefault()
-    console.log(evt)
-    console.log(evt.currentTarget.dataset.name)
-    console.log(evt.currentTarget.dataset.amount)
     if (evt.currentTarget.dataset.amount == 0 && change == -1) {
         console.log("amount is 0 and called -1")
     } else {

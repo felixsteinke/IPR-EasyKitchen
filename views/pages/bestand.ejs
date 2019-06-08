@@ -20,12 +20,14 @@
       </thead>
       <tbody>
         <% stockElements.forEach(s => { %>
-          <tr>
-            <th scope="row"><%= s.name %></th>
-            <th scope="row"><%= s.amountStock %></th>
-            <td><%- include('../partials/button', {label:"+", id: "add", name: s.name, amountStock: s.amountStock}); %></td>
-            <td><%- include('../partials/button', {label:"-", id: "remove", name: s.name, amountStock: s.amountStock}); %></td>
-          </tr>
+        <tr id="<%= s.name %>">
+          <th scope="row"><%= s.name %></th>
+          <th scope="row"><%= s.amountStock %></th>
+          <td><%- include('../partials/button', {label:"+", id: "add", name: s.name, amountStock: s.amountStock}); %>
+          </td>
+          <td><%- include('../partials/button', {label:"-", id: "remove", name: s.name, amountStock: s.amountStock}); %>
+          </td>
+        </tr>
         <% }) %>
       </tbody>
     </table>

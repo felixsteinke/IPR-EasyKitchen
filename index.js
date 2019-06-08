@@ -54,17 +54,21 @@ app.get('/recipe', (req, res) => {
 
 app.post('/api/stock', (req, res) => {
   if (req.body.name && req.body.amountStock) {
-    db.get('SELECT name,amountStock FROM stock WHERE name=?', [req.body.name], function (err,row) {
+    db.get('SELECT name,amountStock FROM stock WHERE name=?', [req.body.name], function (err, row) {
       if (err) {
-        res.json({ msg: "error"})
-      }else{
+        res.json({ msg: "error", err})
+      } else {
         console.log(row)
-        if(row.amountStock > 0){
+        if (row.amountStock > 0 || (row.amountStock == 0 && req.body.amountStock == 1)) {
           updateStock({
-            body: {amount: row.amountStock, change: req.body.amountStock, name: req.body.name}
+            body: {
+              amount: row.amountStock,
+              change: req.body.amountStock,
+              name: req.body.name
+            }
           }, res);
-        }else{
-          res.json({ msg: "error"})
+        } else {
+          res.json({ msg: "amount is zero" })
         }
       }
     })
@@ -78,7 +82,7 @@ function updateStock(req, res) {
   const newAmount = req.body.amount + req.body.change;
   db.run('UPDATE stock SET amountStock=? WHERE name=?;', [newAmount, req.body.name], function (err) {
     if (err) {
-      res.json({ msg: "error", err})
+      res.json({ msg: "error", err })
     }
     else {
       res.json({

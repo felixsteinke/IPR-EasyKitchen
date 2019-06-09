@@ -58,6 +58,22 @@ app.get('/recipe', (req, res) => {
   });
 });
 
+app.post('/api/recipe', (req,res) => {
+  console.log("called /api/recipe")
+  db.get('SELECT * FROM recipes WHERE name=?', [req.body.name], function(err,row){
+    if(err){
+      res.json({msg: "error", err})
+    }else{
+      console.log(row)
+      res.json({
+        "name": row.name,
+        "components": row.components,
+        "desc": row.description
+      })
+    }
+  })
+})
+
 app.post('/api/stock', (req, res) => {
   if (req.body.name && req.body.amountStock) {
     db.get('SELECT name,amountStock FROM stock WHERE name=?', [req.body.name], function (err, row) {

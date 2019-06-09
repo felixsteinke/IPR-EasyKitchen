@@ -13,21 +13,17 @@
     <div class="selection-items">
       <table class="table list-recipe-selection">
         <thead>
-          <tr>
-            <th scope="col">Auswahl</th>
-          </tr>
+          <th scope="col">Auswahl</th>
         </thead>
         <tbody>
-            <% recipes.forEach(r => { %>
-              <tr id="<%= r.name %>" class="select-recipe">
-                <%= r.name %>
-              </tr>
-              <% }) %>
+          <% recipes.forEach(r => { %>
+            <td><%- include('../partials/button-recipe', {name: r.name}); %></td>
+          <% }) %>
         </tbody>
       </table>
     </div>
 
-    <%- include ../partials/recipe %>
+    <div id="displayRecipe"><%- include('../partials/recipe'); %></div>
   </div>
 
 </body>

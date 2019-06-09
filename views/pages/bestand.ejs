@@ -23,9 +23,9 @@
         <tr id="<%= s.name %>">
           <th scope="row"><%= s.name %></th>
           <th scope="row"><%= s.amountStock %></th>
-          <td><%- include('../partials/button', {label:"+", id: "add", name: s.name, amountStock: s.amountStock}); %>
+          <td><%- include('../partials/button-stock', {label:"+", id: "add", name: s.name, amountStock: s.amountStock}); %>
           </td>
-          <td><%- include('../partials/button', {label:"-", id: "remove", name: s.name, amountStock: s.amountStock}); %>
+          <td><%- include('../partials/button-stock', {label:"-", id: "remove", name: s.name, amountStock: s.amountStock}); %>
           </td>
         </tr>
         <% }) %>

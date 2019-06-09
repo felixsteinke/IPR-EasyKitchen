@@ -20,5 +20,14 @@
     width: 100%;
 }
 .recipe {
-    width: 100%
+    width: 100%;
+}
+.btn-recipe {
+    size: 90%,90%;
+}
+.select-recipe {
+    border: small,solid;
+}
+#displayRecipe {
+    display: none;
 }

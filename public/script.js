@@ -3,7 +3,33 @@ $(document).ready((() => {
     $('.add').on("click", evt => stockUpdate(evt, 1))
     $('.remove').on("click", evt => stockUpdate(evt, -1))
     $('.btn-recipe').on('click', evt => openRecipe(evt))
+    $('.btn-list').on('click', evt => addList(evt))
 }))
+
+function addList(evt){
+    evt.preventDefault()
+    const table = document.getElementById('body-shopping-list')
+    const row = table.insertRow()
+    row.insertCell(0).textContent = evt.currentTarget.dataset.name
+    row.insertCell(1).textContent = evt.currentTarget.dataset.amount
+    row.insertCell(2).textContent = "0"
+    const btn = document.createElement('a')
+    btn.type = 'button'
+    btn.href = '/list?special=data'
+    btn.dataset.name = evt.currentTarget.name
+    btn.dataset.change = -1
+    btn.class = 'evt.currentTarget.name btn-size btn btn-outline-secondary'
+    btn.textContent = '-'
+    row.insertCell(3).appendChild(btn)
+    const btn2 = document.createElement('a')
+    btn2.type = 'button'
+    btn2.href = '/list?special=data'
+    btn2.dataset.name = evt.currentTarget.name
+    btn2.dataset.change = 1
+    btn2.class = 'evt.currentTarget.name btn-size btn btn-outline-secondary'
+    btn2.textContent = '+'
+    row.insertCell(4).appendChild(btn2)
+}
 
 async function openRecipe(evt) {
     evt.preventDefault()
@@ -18,7 +44,6 @@ async function openRecipe(evt) {
         })
     })
     const data = await response.json();
-    console.log(data)
     div.style.display = (div.style.display != 'none') ? 'none' : 'block'
     displayRecipe(evt, data)
 }
@@ -63,7 +88,6 @@ async function stockUpdate(evt, change) {
             })
         })
         const data = await response.json()
-        console.log(data)
         updateRow(evt.currentTarget.dataset, data.amount)
     }
 }

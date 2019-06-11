@@ -8,42 +8,34 @@
 <body>
   <%- include ../partials/navbar %>
   <div class="flex-container">
-    <div class="selection-items">
-      <table class="table list-selection-items">
-        <thead>
-          <tr>
+    <div class="panel panel-default selection-items">
+      <div class="panel-heading">
+        <table>
+          <thead>
             <th scope="col">Auswahl</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Art1.name, Stock.stk</td>
-            <td>Art1.name, Stock.stk</td>
-          </tr>
-        </tbody>
-      </table>
+          </thead>
+        </table>
+      </div>
+      <div class="panel-body">
+        <div class="list-group">
+          <% stockElements.forEach(e => { %>
+              <%- include('../partials/button-list', {name: e.name, amountStock: e.amountStock}); %>
+          <% }) %>
+        </div>
+      </div>
     </div>
 
     <div class="shopping-list">
       <table class="table shopping-list">
         <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">BestandStk</th>
-            <th scope="col">EinkaufStk</th>
-            <th scope="col">Einkauf -(1x)</th>
-            <th scope="col">Check, Bestand +(1x)</th>
-          </tr>
+          <th scope="col">Name</th>
+          <th scope="col">BestandStk</th>
+          <th scope="col">EinkaufStk</th>
+          <th scope="col">Einkauf -(1x)</th>
+          <th scope="col">Check, Bestand +(1x)</th>
         </thead>
-        <tbody>
-          <tr>
-            <th>Name</th>
-            <td>Bestand Stk</td>
-            <td>Einkauf Stk</td>
-            <td>Button minus</td>
-            <td>Button plus</td>
-          </tr>
+        <tbody id="body-shopping-list">
+          
         </tbody>
       </table>
     </div>

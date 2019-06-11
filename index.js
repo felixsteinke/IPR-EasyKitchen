@@ -45,7 +45,13 @@ app.get('/stock', (req, res) => {
 
 // shoppinglist Route
 app.get('/list', (req, res) => {
-  res.render('pages/einkaufsliste', { success: true });
+  db.all('SELECT * FROM stock', (err, stockElements) => {
+    if (err) {
+      console.log(err)
+      res.render('pages/einkaufsliste', { stockElements: [] })
+    }
+    res.render('pages/einkaufsliste', { stockElements });
+  });
 });
 // recipe Route
 app.get('/recipe', (req, res) => {
@@ -59,12 +65,10 @@ app.get('/recipe', (req, res) => {
 });
 
 app.post('/api/recipe', (req,res) => {
-  console.log("called /api/recipe")
   db.get('SELECT * FROM recipes WHERE name=?', [req.body.name], function(err,row){
     if(err){
       res.json({msg: "error", err})
     }else{
-      console.log(row)
       res.json({
         "name": row.name,
         "components": row.components,
@@ -80,7 +84,6 @@ app.post('/api/stock', (req, res) => {
       if (err) {
         res.json({ msg: "error", err})
       } else {
-        console.log(row)
         if (row.amountStock > 0 || (row.amountStock == 0 && req.body.amountStock == 1)) {
           updateStock({
             body: {
@@ -100,7 +103,6 @@ app.post('/api/stock', (req, res) => {
 });
 
 function updateStock(req, res) {
-  console.log(req.body)
   const newAmount = req.body.amount + req.body.change;
   db.run('UPDATE stock SET amountStock=? WHERE name=?;', [newAmount, req.body.name], function (err) {
     if (err) {

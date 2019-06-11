@@ -1,0 +1,7 @@
+<a href="/list?special=data"
+    data-name="<%= name ? name : 'no-name' %>"
+    data-amount="<%= amountStock ? amountStock : 'no-amountStock' %>"
+    type="button"
+    class="<%= name ? name : 'no-id' %> btn-list list-group-item btn-size btn btn-outline-secondary">
+    <%= name ? name + ", " + amountStock : 'no label' %>
+</a>

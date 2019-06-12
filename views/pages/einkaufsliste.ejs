@@ -19,7 +19,7 @@
       <div class="panel-body">
         <div class="list-group">
           <% stockElements.forEach(e => { %>
-              <%- include('../partials/button-list', {name: e.name, amountStock: e.amountStock}); %>
+          <%- include('../partials/button-list', {name: e.name, amountStock: e.amountStock}); %>
           <% }) %>
         </div>
       </div>
@@ -35,7 +35,6 @@
           <th scope="col">Check, Bestand +(1x)</th>
         </thead>
         <tbody id="body-shopping-list">
-          
         </tbody>
       </table>
     </div>

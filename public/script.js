@@ -37,15 +37,20 @@ function addRow(table, dataset){
     row.insertCell(1).textContent = dataset.amount
     row.insertCell(2).textContent = "0"
 
-    //const test = '<a href="/list?special=data" type="button" id=dataset.name class="btn-size decrease btn btn-outline-secondary" data-name=dataset.name>-</a>'
-    const btn = document.createElement('a')
-    btn.type = 'button'
-    btn.href = '/list?special=data'
-    btn.dataset.name = dataset.name
-    btn.id = dataset.name
-    btn.class = 'btn-size decrease btn btn-outline-secondary'
-    btn.textContent = '-'
-    row.insertCell(3).appendChild(btn)
+    const test = '<a href="/list?special=data" type="button" id=dataset.name class="btn-size decrease btn btn-outline-secondary" data-name=dataset.name>-</a>'
+
+    const cell = row.insertCell(3)
+    cell.class = "decrease-cells"
+    $('.decrease-cells').append(test)
+
+    //const btn = document.createElement('a')
+    //btn.type = 'button'
+    //btn.href = '/list?special=data'
+    //btn.dataset.name = dataset.name
+    //btn.id = dataset.name
+    //btn.class = 'btn-size decrease btn btn-outline-secondary'
+    //btn.textContent = '-'
+    //row.insertCell(3).appendChild(btn)
 
     const btn2 = document.createElement('a')
     btn2.type = 'button'

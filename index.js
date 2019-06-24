@@ -15,18 +15,10 @@ app.use(bodyParser.json());
 app.use('/public', express.static(process.cwd() + '/public'));
 
 
-app.get('/api/bestand', async (req, res) => {
-  db.all('SELECT * FROM stockElements', (err, stockElements) => {
-    //TODO
-  });
-});   //datenbankabfrage
-
-
 // Index Route
 app.get('/', (req, res) => {
   res.render('pages/index', { success: true });
 });
-
 
 // stock Route
 app.get('/stock', (req, res) => {
@@ -38,7 +30,6 @@ app.get('/stock', (req, res) => {
     res.render('pages/bestand', { stockElements });
   });
 });
-
 
 // shoppinglist Route
 app.get('/list', (req, res) => {
@@ -124,6 +115,27 @@ app.post('/api/recipe', (req, res) => {
     })
   }
 })
+app.post('/api/recipe/addToList', (req, res) => {
+  if (req && res) {
+    const data = getAmounts(req.body.name)
+    console.log(data)
+    if (data) {
+      db.run('UPDATE stock SET amountList=? WHERE name=?;', [data.amountList + req.body.amount, req.body.name], function (err) {
+        if (err) {
+          res.json({ msg: "error", err }).end()
+        }
+        else {
+          res.json(data).end()
+        }
+      });
+    } else {
+      res.json({ msg: "error" }).end()
+    }
+  }
+})
+app.post('/api/recipe/deleteFromStock', (req, res) => {
+
+})
 
 app.post('/api/stock', (req, res) => {
   if (req.body.name && req.body.amountStock) {
@@ -148,6 +160,19 @@ app.post('/api/stock', (req, res) => {
     console.log("Übergabeparameter null")
   }
 });
+
+function getAmounts(name) {
+  db.all('SELECT * FROM stock where name=?', [name], (err, stockElement) => {
+    if (err) {
+      console.log(err)
+    }
+    console.log(stockElement)
+    return JSON.stringify({
+      "amountStock": stockElement[0].amountStock,
+      "amountList": stockElement[0].amountList
+    })
+  });
+}
 
 function updateStock(req, res) {
   const newAmount = req.body.amount + req.body.change;

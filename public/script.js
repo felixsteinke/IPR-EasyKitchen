@@ -6,6 +6,8 @@ $(document).ready((() => {
     $('.btn-list').on('click', addList)
     $('.add-stock').on('click', evt => addBestand(evt))
     $('.decrease').on('click', evt => decreaseList(evt))
+    $('.delete-from-stock').on('click', deleteFromStock)
+    $('.add-to-list').on('click', addToList)
 }))
 //list
 async function decreaseList(evt) {
@@ -36,7 +38,7 @@ async function decreaseList(evt) {
     }
 }
 async function addBestand(evt) {
-    evt.preventDefault()
+    //evt.preventDefault()
     var list
     var stock
     const rows = document.getElementById('body-shopping-list').childNodes
@@ -68,7 +70,7 @@ async function addBestand(evt) {
     }
 }
 function addList(evt) {
-    evt.preventDefault()
+    //evt.preventDefault()
     const table = document.getElementById('body-shopping-list')
     console.log(table)
     if (table.childElementCount != 0) {
@@ -166,6 +168,30 @@ function displayRecipe(evt, data) {
         i = i + 1
     }
     i = 0
+}
+function deleteFromStock(evt){
+    evt.preventDefault()
+    console.log("delete from stock")
+}
+async function addToList(evt){
+    evt.preventDefault()
+    const comp = document.getElementById('components')
+    comp.childNodes.forEach(async function(e){
+        const name = e.childNodes[0].textContent
+        const amount = e.childNodes[1].textContent
+        const response = await fetch('/api/recipe/addToList', {
+            method: "post",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify({
+                name: name,
+                amount: amount
+            })
+        })
+        const data = await response.json()
+        console.log(data)
+    })
 }
 //stock
 async function stockUpdate(evt, change) {

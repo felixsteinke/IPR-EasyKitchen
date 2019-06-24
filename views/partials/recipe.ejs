@@ -2,13 +2,6 @@
   <div>
     <h2 id="headline">Name Rezept</h2>
   </div>
-
-  <%#
-        <div id="picture">
-          <h3>Pic</h3>
-        </div>
-        %>
-
   <div class="table-components">
     <table class="table recipe-components">
       <h3>Zutaten</h3>
@@ -23,8 +16,22 @@
   <div>
     <p id="description">Beschreibung</p>
   </div>
-  <div class="button add-to-list">
-  </div>
-  <div class="button cooked-delete-stock">
-  </div>
+  <table>
+    <tr>
+      <td>
+        <a href="/recipes?special=data"
+          type="button"
+          class="btn-size add-to-list btn btn-outline-secondary">
+          Zutaten in die Einkaufsliste
+        </a>
+      </td>
+      <td>
+        <a href="/recipes?special=data"
+          type="button"
+          class="btn-size delete-from-stock btn btn-outline-secondary">
+          Zutaten aus dem Bestand entfernen
+        </a>
+      </td>
+    </tr>
+  </table>
 </div>

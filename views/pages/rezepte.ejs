@@ -23,13 +23,12 @@
               <% recipes.forEach(r => { %>
                 <td><%- include('../partials/button-recipe', {name: r.name}); %></td>
               <% }) %>
-            </div>
+          </div>
       </div>
     </div>
-
-
-
-    <div id="displayRecipe"><%- include('../partials/recipe'); %></div>
+    <div id="displayRecipe">
+      <%- include('../partials/recipe'); %>
+    </div>
   </div>
 
 </body>

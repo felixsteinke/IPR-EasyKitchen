@@ -12,8 +12,8 @@ async function decreaseList(evt) {
     evt.preventDefault()
     var amount = ""
     const rows = document.getElementById('body-shopping-list').childNodes
-    for(i = 1; i<rows.length; i+=2){
-        if(rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name){
+    for (i = 1; i < rows.length; i += 2) {
+        if (rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name) {
             amount = rows[i].childNodes[4].textContent
         }
     }
@@ -29,33 +29,55 @@ async function decreaseList(evt) {
     })
     const data = await response.json();
     console.log(data)
-    for(i = 1; i<rows.length; i+=2){
-        if(rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name){
+    for (i = 1; i < rows.length; i += 2) {
+        if (rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name) {
             rows[i].childNodes[4].textContent = data.newAmount
         }
     }
 }
 async function addBestand(evt) {
     evt.preventDefault()
-    const response = await fetch('/api/list/decrease', {
+    var list
+    var stock
+    const rows = document.getElementById('body-shopping-list').childNodes
+    console.log(rows)
+    for (i = 1; i < rows.length; i += 2) {
+        if (rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name) {
+            list = rows[i].childNodes[4].textContent
+            stock = rows[i].childNodes[2].textContent
+        }
+    }
+    const response = await fetch('/api/list/submit', {
         method: "post",
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         },
-        body: {
+        body: JSON.stringify({
             name: evt.currentTarget.dataset.name,
-            newAmount: 3//TODO
-        }
+            amountStock: stock,
+            amountList: list
+        })
     })
+    const data = await response.json()
+    if (data.succsess == true) {
+        for (i = 1; i < rows.length; i += 2) {
+            if (rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name) {
+                rows[i].childNodes[4].textContent = 0
+            }
+        }
+    }
 }
 function addList(evt) {
     evt.preventDefault()
     const table = document.getElementById('body-shopping-list')
     console.log(table)
     if (table.childElementCount != 0) {
+        console.log("tablechildren exist")
         for (i = 1; i < table.childElementCount; i++) {
+            console.log("child" + i)
             const children = table.childNodes[i].childNodes
             if (children[0].textContent = evt.currentTarget.dataset.name) {
+                console.log("found row")
                 if (children[4].textContent == null) {
                     children[4].textContent == 1
                 } else {

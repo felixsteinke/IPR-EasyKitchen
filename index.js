@@ -79,8 +79,8 @@ app.post('/api/list/add', (req, res) => {
 app.post('/api/list/decrease', (req, res) => {
   if (req && res) {
     console.log(req.body)
-    const newAmount = req.body.amount != 0 ? parseInt(req.body.amount) - 1 : 0
-    db.run('UPDATE stock SET amountList=? WHERE name=?;', [parseInt(newAmount), req.body.name], function (err) {
+    const newAmount = req.body.newAmount != 0 ? parseInt(req.body.newAmount) - 1 : 0
+    db.run('UPDATE stock SET amountList=? WHERE name=?;', [newAmount, req.body.name], function (err) {
       if (err) {
         res.json({ msg: "error", err })
       }
@@ -95,15 +95,14 @@ app.post('/api/list/decrease', (req, res) => {
 })
 app.post('/api/list/submit', (req, res) => {
   if (req && res) {
-    db.run('UPDATE stock SET amountStock=?, amountList=? WHERE name=?;', [req.body.newAmountStock + 1, req.body.newAmountList - 1, req.body.name], function (err) {
+    const newAmountStock = req.body.amountList != 0 ? parseInt(req.body.amountStock) + parseInt(req.body.amountList) : req.body.amountStock
+    db.run('UPDATE stock SET amountStock=?, amountList=? WHERE name=?;', [newAmountStock, 0, req.body.name], function (err) {
       if (err) {
         res.json({ msg: "error", err })
       }
       else {
         res.json({
-          "name": req.body.name,
-          "amountStock": req.body.newAmountStock,
-          "amountList": req.body.newAmountList
+          "succsess": true
         }).end();
       }
     });

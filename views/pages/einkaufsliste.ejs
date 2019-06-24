@@ -37,7 +37,7 @@
         <tbody id="body-shopping-list">
           <% stockElements.forEach(e => { %>
             <% if(e.amountList != 0){ %>
-              <%- include('../partials/list-row', {name: e.name, amountStock: e.amountStock, amountList: e.amountList}) %>
+              <tr><%- include('../partials/list-row', {name: e.name, amountStock: e.amountStock, amountList: e.amountList}) %></tr>
             <% } %>
           <% }) %>
         </tbody>

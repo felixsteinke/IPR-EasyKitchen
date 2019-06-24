@@ -15,9 +15,6 @@ app.use(bodyParser.json());
 app.use('/public', express.static(process.cwd() + '/public'));
 
 
-
-const TABLE_NAME = 'yas'
-
 app.get('/api/bestand', async (req, res) => {
   db.all('SELECT * FROM stockElements', (err, stockElements) => {
     //TODO
@@ -66,15 +63,14 @@ app.get('/recipe', (req, res) => {
 
 app.post('/api/list/add', (req, res) => {
   if (req && res) {
-    const newAmount = parseInt(req.body.amount) + 1;
-    db.run('UPDATE stock SET amountList=? WHERE name=?;', [newAmount, req.body.name], function (err) {
+    db.run('UPDATE stock SET amountList=? WHERE name=?;', [req.body.newAmount, req.body.name], function (err) {
       if (err) {
         res.json({ msg: "error", err })
       }
       else {
         res.json({
           "name": req.body.name,
-          "newAmount": newAmount
+          "newAmount": req.body.newAmount
         }).end();
       }
     });
@@ -82,8 +78,9 @@ app.post('/api/list/add', (req, res) => {
 })
 app.post('/api/list/decrease', (req, res) => {
   if (req && res) {
-    const newAmount = req.body.amount - 1;
-    db.run('UPDATE stock SET amountList=? WHERE name=?;', [newAmount, req.body.name], function (err) {
+    console.log(req.body)
+    const newAmount = req.body.amount != 0 ? parseInt(req.body.amount) - 1 : 0
+    db.run('UPDATE stock SET amountList=? WHERE name=?;', [parseInt(newAmount), req.body.name], function (err) {
       if (err) {
         res.json({ msg: "error", err })
       }

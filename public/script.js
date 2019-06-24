@@ -8,13 +8,45 @@ $(document).ready((() => {
     $('.decrease').on('click', evt => decreaseList(evt))
 }))
 //list
-function decreaseList(evt) {
+async function decreaseList(evt) {
     evt.preventDefault()
-    console.log("called decreaseList()")
+    var amount = ""
+    const rows = document.getElementById('body-shopping-list').childNodes
+    for(i = 1; i<rows.length; i+=2){
+        if(rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name){
+            amount = rows[i].childNodes[4].textContent
+        }
+    }
+    const response = await fetch('/api/list/decrease', {
+        method: "post",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify({
+            name: evt.currentTarget.dataset.name,
+            newAmount: amount
+        })
+    })
+    const data = await response.json();
+    console.log(data)
+    for(i = 1; i<rows.length; i+=2){
+        if(rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name){
+            rows[i].childNodes[4].textContent = data.newAmount
+        }
+    }
 }
-function addBestand(evt) {
+async function addBestand(evt) {
     evt.preventDefault()
-    console.log("called addBestand()")
+    const response = await fetch('/api/list/decrease', {
+        method: "post",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
+        body: {
+            name: evt.currentTarget.dataset.name,
+            newAmount: 3//TODO
+        }
+    })
 }
 function addList(evt) {
     evt.preventDefault()
@@ -24,17 +56,17 @@ function addList(evt) {
         for (i = 1; i < table.childElementCount; i++) {
             const children = table.childNodes[i].childNodes
             if (children[0].textContent = evt.currentTarget.dataset.name) {
-                if (children[3].textContent == null) {
-                    children[3].textContent == 1
+                if (children[4].textContent == null) {
+                    children[4].textContent == 1
                 } else {
-                    children[3].textContent = parseInt(children[2].textContent) + 1
+                    children[4].textContent = parseInt(children[4].textContent) + 1
                 }
-                //updateStockListAdd({ name: evt.currentTarget.dataset.name, change: 1 })
+                updateStockListAdd({ name: evt.currentTarget.dataset.name, newAmount: children[4].textContent })
                 return;
             }
         }
     }
-    updateStockListAdd({ name: evt.currentTarget.dataset.name, amount: evt.currentTarget.dataset.amount })
+    updateStockListAdd({ name: evt.currentTarget.dataset.name, newAmount: 1 })
     addRow(document.getElementById('body-shopping-list'), evt.currentTarget.dataset)
 }
 function addRow(table, dataset) {
@@ -44,7 +76,6 @@ function addRow(table, dataset) {
     row.insertCell(1).textContent = dataset.amount
     row.insertCell(2).textContent = "0"
 
-<<<<<<< HEAD
     //const test = '<a href="/list?special=data" type="button" id=dataset.name class="btn-size decrease btn btn-outline-secondary" data-name=dataset.name>-</a>'
     const btn = document.createElement('a')
     btn.type = 'button'
@@ -55,22 +86,6 @@ function addRow(table, dataset) {
     btn.textContent = '-'
     const cell = row.insertCell(3).appendChild(btn)
     cell.id = dataset.name
-=======
-    const test = '<a href="/list?special=data" type="button" id=dataset.name class="btn-size decrease btn btn-outline-secondary" data-name=dataset.name>-</a>'
-
-    const cell = row.insertCell(3)
-    cell.class = "decrease-cells"
-    $('.decrease-cells').append(test)
-
-    //const btn = document.createElement('a')
-    //btn.type = 'button'
-    //btn.href = '/list?special=data'
-    //btn.dataset.name = dataset.name
-    //btn.id = dataset.name
-    //btn.class = 'btn-size decrease btn btn-outline-secondary'
-    //btn.textContent = '-'
-    //row.insertCell(3).appendChild(btn)
->>>>>>> de5fb782f0a47447829e0912700ddcd030642b0a
 
     const btn2 = document.createElement('a')
     btn2.type = 'button'
@@ -90,13 +105,11 @@ async function updateStockListAdd(input) {
         },
         body: JSON.stringify({
             name: input.name,
-            amount: input.amount
+            newAmount: input.newAmount
         })
     })
     const data = await response.json();
-    const row = document.getElementById(input.name)
-    console.log(row)
-    row.childNodes[1].textContent = parseInt(input.amount) + 1
+    console.log(data)
 }
 //recipe
 async function openRecipe(evt) {

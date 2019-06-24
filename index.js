@@ -64,25 +64,76 @@ app.get('/recipe', (req, res) => {
   });
 });
 
-app.post('/api/recipe', (req,res) => {
-  db.get('SELECT * FROM recipes WHERE name=?', [req.body.name], function(err,row){
-    if(err){
-      res.json({msg: "error", err})
-    }else{
-      res.json({
-        "name": row.name,
-        "components": row.components,
-        "desc": row.description
-      })
-    }
-  })
+app.post('/api/list/add', (req, res) => {
+  if (req && res) {
+    const newAmount = parseInt(req.body.amount) + 1;
+    db.run('UPDATE stock SET amountList=? WHERE name=?;', [newAmount, req.body.name], function (err) {
+      if (err) {
+        res.json({ msg: "error", err })
+      }
+      else {
+        res.json({
+          "name": req.body.name,
+          "newAmount": newAmount
+        }).end();
+      }
+    });
+  }
+})
+app.post('/api/list/decrease', (req, res) => {
+  if (req && res) {
+    const newAmount = req.body.amount - 1;
+    db.run('UPDATE stock SET amountList=? WHERE name=?;', [newAmount, req.body.name], function (err) {
+      if (err) {
+        res.json({ msg: "error", err })
+      }
+      else {
+        res.json({
+          "name": req.body.name,
+          "newAmount": newAmount
+        }).end();
+      }
+    });
+  }
+})
+app.post('/api/list/submit', (req, res) => {
+  if (req && res) {
+    db.run('UPDATE stock SET amountStock=?, amountList=? WHERE name=?;', [req.body.newAmountStock + 1, req.body.newAmountList - 1, req.body.name], function (err) {
+      if (err) {
+        res.json({ msg: "error", err })
+      }
+      else {
+        res.json({
+          "name": req.body.name,
+          "amountStock": req.body.newAmountStock,
+          "amountList": req.body.newAmountList
+        }).end();
+      }
+    });
+  }
+})
+
+app.post('/api/recipe', (req, res) => {
+  if (req && res) {
+    db.get('SELECT * FROM recipes WHERE name=?', [req.body.name], function (err, row) {
+      if (err) {
+        res.json({ msg: "error", err })
+      } else {
+        res.json({
+          "name": row.name,
+          "components": row.components,
+          "desc": row.description
+        })
+      }
+    })
+  }
 })
 
 app.post('/api/stock', (req, res) => {
   if (req.body.name && req.body.amountStock) {
     db.get('SELECT name,amountStock FROM stock WHERE name=?', [req.body.name], function (err, row) {
       if (err) {
-        res.json({ msg: "error", err})
+        res.json({ msg: "error", err })
       } else {
         if (row.amountStock > 0 || (row.amountStock == 0 && req.body.amountStock == 1)) {
           updateStock({

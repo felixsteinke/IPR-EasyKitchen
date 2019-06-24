@@ -1,0 +1,7 @@
+<row id="<%= name ? name : 'no-id' %>" class="list-row">
+    <td><%= name ? name : 'no-name' %></td>
+    <td><%= amountStock ? amountStock : 'no-amount' %></td>
+    <td><%= amountList ? amountList : 'no-amount' %></td>
+    <td><%- include('./btn-decrease', {name: name}) %></td>
+    <td><%- include('./btn-addStock', {name: name, amountList: amountList}) %></td>
+</row>

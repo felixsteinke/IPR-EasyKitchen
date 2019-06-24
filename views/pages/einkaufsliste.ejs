@@ -35,6 +35,11 @@
           <th scope="col">Check, Bestand +(1x)</th>
         </thead>
         <tbody id="body-shopping-list">
+          <% stockElements.forEach(e => { %>
+            <% if(e.amountList != 0){ %>
+              <%- include('../partials/list-row', {name: e.name, amountStock: e.amountStock, amountList: e.amountList}) %>
+            <% } %>
+          <% }) %>
         </tbody>
       </table>
     </div>

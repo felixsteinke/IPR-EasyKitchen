@@ -9,22 +9,29 @@
   <%- include ../partials/navbar %>
 
   <div class="flex-container">
-
     <div class="selection-items">
-      <table class="table list-recipe-selection">
-        <thead>
-          <th scope="col">Auswahl</th>
-        </thead>
-        <tbody class="recipe-list">
-          <% recipes.forEach(r => { %>
-            <td><%- include('../partials/button-recipe', {name: r.name}); %></td>
-          <% }) %>
-        </tbody>
-      </table>
+      <div class="table list-recipe-selection">
+        <table>
+          <thead>
+            <th scope="col">Auswahl</th>
+          </thead>
+        </table>
+      </div>
+      <div class="table list-recipe-selection-body">
+          <div class="list-group">
+              <% recipes.forEach(r => { %>
+                <td><%- include('../partials/button-recipe', {name: r.name}); %></td>
+              <% }) %>
+            </div>
+      </div>
     </div>
-
-    <div id="displayRecipe"><%- include('../partials/recipe'); %></div>
   </div>
+
+
+    <div id="displayRecipe">
+      <%- include('../partials/recipe'); %>
+    </div>
+  
 
 </body>
 

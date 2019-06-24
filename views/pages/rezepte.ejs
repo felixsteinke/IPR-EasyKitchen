@@ -15,7 +15,7 @@
         <thead>
           <th scope="col">Auswahl</th>
         </thead>
-        <tbody>
+        <tbody class="recipe-list">
           <% recipes.forEach(r => { %>
             <td><%- include('../partials/button-recipe', {name: r.name}); %></td>
           <% }) %>

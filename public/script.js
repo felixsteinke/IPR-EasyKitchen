@@ -44,6 +44,7 @@ function addRow(table, dataset) {
     row.insertCell(1).textContent = dataset.amount
     row.insertCell(2).textContent = "0"
 
+<<<<<<< HEAD
     //const test = '<a href="/list?special=data" type="button" id=dataset.name class="btn-size decrease btn btn-outline-secondary" data-name=dataset.name>-</a>'
     const btn = document.createElement('a')
     btn.type = 'button'
@@ -54,6 +55,22 @@ function addRow(table, dataset) {
     btn.textContent = '-'
     const cell = row.insertCell(3).appendChild(btn)
     cell.id = dataset.name
+=======
+    const test = '<a href="/list?special=data" type="button" id=dataset.name class="btn-size decrease btn btn-outline-secondary" data-name=dataset.name>-</a>'
+
+    const cell = row.insertCell(3)
+    cell.class = "decrease-cells"
+    $('.decrease-cells').append(test)
+
+    //const btn = document.createElement('a')
+    //btn.type = 'button'
+    //btn.href = '/list?special=data'
+    //btn.dataset.name = dataset.name
+    //btn.id = dataset.name
+    //btn.class = 'btn-size decrease btn btn-outline-secondary'
+    //btn.textContent = '-'
+    //row.insertCell(3).appendChild(btn)
+>>>>>>> de5fb782f0a47447829e0912700ddcd030642b0a
 
     const btn2 = document.createElement('a')
     btn2.type = 'button'
@@ -138,6 +155,7 @@ async function stockUpdate(evt, change) {
 function updateRow(data, newAmount) {
     const row = document.getElementById(data.name).childNodes
     row[3].textContent = newAmount
-    row[5].childNodes[0].dataset.amount = newAmount
+    row[5].textContent = newAmount * (row[5].textContent / row[7].childNodes[0].dataset.amount)
     row[7].childNodes[0].dataset.amount = newAmount
+    row[9].childNodes[0].dataset.amount = newAmount
 }

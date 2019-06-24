@@ -119,6 +119,7 @@ async function stockUpdate(evt, change) {
 function updateRow(data, newAmount) {
     const row = document.getElementById(data.name).childNodes
     row[3].textContent = newAmount
-    row[5].childNodes[0].dataset.amount = newAmount
+    row[5].textContent = newAmount * (row[5].textContent / row[7].childNodes[0].dataset.amount)
     row[7].childNodes[0].dataset.amount = newAmount
+    row[9].childNodes[0].dataset.amount = newAmount
 }

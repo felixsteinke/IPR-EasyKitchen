@@ -92,7 +92,7 @@ app.post('/api/list/submit', (req, res) => {
       }
       else {
         res.json({
-          "succsess": true
+          "success": true
         }).end();
       }
     });
@@ -140,58 +140,49 @@ app.post('/api/recipe', (req, res) => {
 })
 app.post('/api/recipe/addToList', (req, res) => {
   if (req && res) {
-    data = getAmounts(req.body.name)
-    console.log(data)   //undefined WHY?!?!!!
-    if (data) {
-      const newAmount = data.amountList + req.body.amount
-      db.run('UPDATE stock SET amountList=? WHERE name=?;', [newAmount, req.body.name], function (err) {
-        if (err) {
-          res.json({ msg: "error", err }).end()
-        }
-        else {
-          res.json(data).end()
-        }
-      });
-    } else {
-      res.json({ msg: "error" }).end()
-    }
+    const newAmount = req.body.amountList + req.body.amount
+    db.run('UPDATE stock SET amountList=? WHERE name=?;', [newAmount, req.body.name], function (err) {
+      if (err) {
+        res.json({ msg: "error", err }).end()
+      }
+      else {
+        res.json({success: true}).end()
+      }
+    })
   }
 })
 app.post('/api/recipe/deleteFromStock', (req, res) => {
   if (req && res) {
-    data = getAmounts(req.body.name)
-    console.log(data)   //undefined WHY?!?!!!
-    if (data) {
-      const newAmount = data.amountStock - req.body.amount
-      db.run('UPDATE stock SET amountStock=? WHERE name=?;', [newAmount, req.body.name], function (err) {
-        if (err) {
-          res.json({ msg: "error", err }).end()
-        }
-        else {
-          res.json(data).end()
-        }
-      });
-    } else {
-      res.json({ msg: "error" }).end()
-    }
+    const newAmount = req.body.amountStock - req.body.amount
+    db.run('UPDATE stock SET amountStock=? WHERE name=?;', [newAmount, req.body.name], function (err) {
+      if (err) {
+        res.json({ msg: "error", err }).end()
+      }
+      else {
+        res.json({success: true}).end()
+      }
+    })
+  }
+})
+app.post('/api/recipe/data', (req, res) => {
+  if (req && res) {
+    db.all('SELECT * FROM stock where name=?', [req.body.name], (err, stockElement) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.json({
+          amountStock: stockElement[0].amountStock,
+          amountList: stockElement[0].amountList
+        })
+      }
+    })
+  } else {
+    res.json({ msg: "error" }).end()
   }
 })
 
 
 //functions
-function getAmounts(name) {
-  db.all('SELECT * FROM stock where name=?', [name], (err, stockElement) => {
-    if (err) {
-      console.log(err)
-    }else{
-      console.log(stockElement[0])
-      return JSON.stringify({
-        amountStock: stockElement[0].amountStock,
-        amountList: stockElement[0].amountList
-      })
-  	}
-  })
-}
 function updateStock(req, res) {
   const newAmount = req.body.amount + req.body.change;
   db.run('UPDATE stock SET amountStock=? WHERE name=?;', [newAmount, req.body.name], function (err) {

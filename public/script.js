@@ -37,7 +37,7 @@ async function decreaseList(evt) {
     }
 }
 async function addBestand(evt) {
-    evt.preventDefault()
+    //evt.preventDefault()
     var list
     var stock
     const rows = document.getElementById('body-shopping-list').childNodes
@@ -145,9 +145,9 @@ async function openRecipe(evt) {
     })
     const data = await response.json();
     div.style.display = (div.style.display != 'none') ? 'none' : 'block'
-    displayRecipe(evt, data)
+    displayRecipe(data)
 }
-function displayRecipe(evt, data) {
+function displayRecipe(data) {
     document.getElementById('headline').textContent = data.name
     document.getElementById('description').textContent = data.desc
     const comp = data.components
@@ -179,6 +179,17 @@ async function performFetch(route){
     comp.childNodes.forEach(async function(e){
         const name = e.childNodes[0].textContent
         const amount = e.childNodes[1].textContent
+        const responseData = await fetch('/api/recipe/data', {
+            method: "post",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify({
+                name: name
+            })
+        })
+        const resData = await responseData.json()
+
         const response = await fetch('/api/recipe/' + route, {
             method: "post",
             headers: {
@@ -186,6 +197,8 @@ async function performFetch(route){
             },
             body: JSON.stringify({
                 name: name,
+                amountList:resData.amountList,
+                amountStock: resData.amountStock,
                 amount: amount
             })
         })

@@ -30,7 +30,6 @@ async function decreaseList(evt) {
         })
     })
     const data = await response.json();
-    console.log(data)
     for (i = 1; i < rows.length; i += 2) {
         if (rows[i].childNodes[0].textContent == evt.currentTarget.dataset.name) {
             rows[i].childNodes[4].textContent = data.newAmount
@@ -38,7 +37,7 @@ async function decreaseList(evt) {
     }
 }
 async function addBestand(evt) {
-    //evt.preventDefault()
+    evt.preventDefault()
     var list
     var stock
     const rows = document.getElementById('body-shopping-list').childNodes
@@ -70,37 +69,34 @@ async function addBestand(evt) {
     }
 }
 function addList(evt) {
-    //evt.preventDefault()
+    evt.preventDefault()
     const table = document.getElementById('body-shopping-list')
     console.log(table)
     if (table.childElementCount != 0) {
-        console.log("tablechildren exist")
         for (i = 1; i < table.childElementCount; i++) {
-            console.log("child" + i)
             const children = table.childNodes[i].childNodes
             if (children[0].textContent = evt.currentTarget.dataset.name) {
-                console.log("found row")
                 if (children[4].textContent == null) {
                     children[4].textContent == 1
                 } else {
                     children[4].textContent = parseInt(children[4].textContent) + 1
                 }
                 updateStockListAdd({ name: evt.currentTarget.dataset.name, newAmount: children[4].textContent })
-                return;
+                return
             }
         }
+    }else{
+        updateStockListAdd({ name: evt.currentTarget.dataset.name, newAmount: 1 })
+        addRow(document.getElementById('table-list'), evt.currentTarget.dataset)
     }
-    updateStockListAdd({ name: evt.currentTarget.dataset.name, newAmount: 1 })
-    addRow(document.getElementById('body-shopping-list'), evt.currentTarget.dataset)
 }
 function addRow(table, dataset) {
-    const row = table.insertRow()
+    const row = table.insertRow(-1)
     row.class = 'list-row'
     row.insertCell(0).textContent = dataset.name
     row.insertCell(1).textContent = dataset.amount
-    row.insertCell(2).textContent = "0"
+    row.insertCell(2).textContent = "1"
 
-    //const test = '<a href="/list?special=data" type="button" id=dataset.name class="btn-size decrease btn btn-outline-secondary" data-name=dataset.name>-</a>'
     const btn = document.createElement('a')
     btn.type = 'button'
     btn.href = '/list?special=data'
@@ -133,7 +129,6 @@ async function updateStockListAdd(input) {
         })
     })
     const data = await response.json();
-    console.log(data)
 }
 //recipe
 async function openRecipe(evt) {
@@ -171,15 +166,20 @@ function displayRecipe(evt, data) {
 }
 function deleteFromStock(evt){
     evt.preventDefault()
-    console.log("delete from stock")
+    const data = performFetch('deleteFromStock')
+    console.log(data)
 }
 async function addToList(evt){
     evt.preventDefault()
+    const data = performFetch('addToList')
+    console.log(data)
+}
+async function performFetch(route){
     const comp = document.getElementById('components')
     comp.childNodes.forEach(async function(e){
         const name = e.childNodes[0].textContent
         const amount = e.childNodes[1].textContent
-        const response = await fetch('/api/recipe/addToList', {
+        const response = await fetch('/api/recipe/' + route, {
             method: "post",
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -191,8 +191,10 @@ async function addToList(evt){
         })
         const data = await response.json()
         console.log(data)
+        return data
     })
 }
+
 //stock
 async function stockUpdate(evt, change) {
     evt.preventDefault()
@@ -216,7 +218,10 @@ async function stockUpdate(evt, change) {
 function updateRow(data, newAmount) {
     const row = document.getElementById(data.name).childNodes
     row[3].textContent = newAmount
-    row[5].textContent = newAmount * (row[5].textContent / row[7].childNodes[0].dataset.amount)
+    row[5].textContent = row[5].textContent ? newAmount * (row[5].textContent / row[7].childNodes[0].dataset.amount) : null
     row[7].childNodes[0].dataset.amount = newAmount
     row[9].childNodes[0].dataset.amount = newAmount
+    if(row[5].textContent == "NaN"){
+        location.reload()
+    }
 }

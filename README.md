@@ -9,16 +9,16 @@ In has an in-build database with a snapshot of some data.
 
 ### Home
 
-![Home](.pic/home.png)
+![Home](.doc/home.png)
 
 ### Storage
 
-![Storage](.pic/bestand.png)
+![Storage](.doc/bestand.png)
 
 ### Shopping List
 
-![Shopping List](.pic/einkaufsliste.png)
+![Shopping List](.doc/einkaufsliste.png)
 
 ### Recipe
 
-![Recipe](.pic/rezept.png)
+![Recipe](.doc/rezept.png)
